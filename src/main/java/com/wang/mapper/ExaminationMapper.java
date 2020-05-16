@@ -44,6 +44,9 @@ public interface ExaminationMapper {
     Examination queryExaminationById(Integer id);
 
 
+    @Select("select * from examination where stu_id = #{stu_id}")
+    Examination queryExaminationByStu(String  stu_id);
+
     @Select("select a.stu_id,a.`name`,a.`gender`,a.grade,b.id,a.isInput \n" +
             "from student a \n" +
             "left join examination b \n" +
@@ -61,7 +64,10 @@ public interface ExaminationMapper {
     @Delete("delete from examination where stu_id = #{stu_id}")
     int deleteExamination(String stu_id);
 
-    @Insert(value = "update examination \n" +
+    @Delete("delete from examination where id = #{id}")
+    int deleteExaminationById(Integer  id);
+
+    @Insert(value = "update examination set\n" +
             "stu_id=#{examination.stu_id},\n" +
             "name=#{examination.name},\n" +
             "height=#{examination.height},\n" +

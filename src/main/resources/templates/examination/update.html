@@ -24,18 +24,19 @@
 <div class="layui-fluid">
     <div class="layui-row">
         <form class="layui-form" th:each="examination : ${examination}">
-
+            <input type="hidden" name="id" lay-verify="required"
+                   autocomplete="off" class="layui-input" th:value="${examination.id}" readonly>
             <div class="layui-form-item">
                 <label class="layui-form-label">学号</label>
                 <div class="layui-input-inline">
                     <input type="text" name="stu_id" lay-verify="required"
-                           autocomplete="off" class="layui-input" th:text="${examination.stu_id}" readonly>
+                           autocomplete="off" class="layui-input" th:value="${examination.stu_id}" readonly>
                 </div>
 
                 <label class="layui-form-label">姓名</label>
                 <div class="layui-input-inline">
                     <input type="text" name="name" lay-verify="required"
-                           autocomplete="off" class="layui-input" th:text="${examination.name}" readonly>
+                           autocomplete="off" class="layui-input" th:value="${examination.name}" readonly>
                 </div>
             </div>
 
@@ -44,12 +45,12 @@
                 <label class="layui-form-label">身高</label>
                 <div class="layui-input-inline">
                     <input type="text" name="height" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.height}">
+                           autocomplete="off" class="layui-input" th:value="${examination.height}">
                 </div>
                 <label class="layui-form-label">体重</label>
                 <div class="layui-input-inline">
                     <input type="text" name="weight" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.weight}">
+                           autocomplete="off" class="layui-input" th:value="${examination.weight}">
                 </div>
             </div>
 
@@ -58,12 +59,12 @@
                 <label class="layui-form-label">嗅觉</label>
                 <div class="layui-input-inline">
                     <input type="text" name="nose" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.nose}">
+                           autocomplete="off" class="layui-input" th:value="${examination.nose}">
                 </div>
                 <label class="layui-form-label">鼻窦疾病</label>
                 <div class="layui-input-inline">
                     <input type="text" name="noseDiseases" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.noseDiseases}">
+                           autocomplete="off" class="layui-input" th:value="${examination.noseDiseases}">
                 </div>
             </div>
 
@@ -71,12 +72,12 @@
                 <label class="layui-form-label">门齿</label>
                 <div class="layui-input-inline">
                     <input type="text" name="tooth" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.tooth}">
+                           autocomplete="off" class="layui-input" th:value="${examination.tooth}">
                 </div>
                 <label class="layui-form-label">口吃</label>
                 <div class="layui-input-inline">
                     <input type="text" name="stuttering" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.stuttering}">
+                           autocomplete="off" class="layui-input" th:value="${examination.stuttering}">
                 </div>
             </div>
 
@@ -84,35 +85,35 @@
                 <label class="layui-form-label">血压</label>
                 <div class="layui-input-inline">
                     <input type="text" name="bloodPressure" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.bloodPressure}">
+                           autocomplete="off" class="layui-input" th:value="${examination.bloodPressure}">
                 </div>
                 <label class="layui-form-label">心率</label>
                 <div class="layui-input-inline">
                     <input type="text" name="heartRate" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.heartRate}">
+                           autocomplete="off" class="layui-input" th:value="${examination.heartRate}">
                 </div>
 
                 <label class="layui-form-label">肝功能</label>
                 <div class="layui-input-inline">
                     <input type="text" name="liver" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.liver}">
+                           autocomplete="off" class="layui-input" th:value="${examination.liver}">
                 </div>
             </div>
             <div class="layui-form-item">
                 <label class="layui-form-label">左眼视力</label>
                 <div class="layui-input-inline">
                     <input type="text" name="eyeLeft" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.eyeLeft}">
+                           autocomplete="off" class="layui-input" th:value="${examination.eyeLeft}">
                 </div>
                 <label class="layui-form-label">右眼视力</label>
                 <div class="layui-input-inline">
                     <input type="text" name="eyeRight" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.eyeRight}">
+                           autocomplete="off" class="layui-input" th:value="${examination.eyeRight}">
                 </div>
                 <label class="layui-form-label">有无眼疾</label>
                 <div class="layui-input-inline">
                     <input type="text" name="eyeDiseases" lay-verify="required" lay-reqtext="必填项不能为空"
-                           autocomplete="off" class="layui-input" th:text="${examination.eyeDiseases}">
+                           autocomplete="off" class="layui-input" th:value="${examination.eyeDiseases}">
                 </div>
             </div>
 
@@ -138,6 +139,7 @@
         //监听提交
         form.on('submit(add)',
             function () {
+                var id = $("input[name='id']").val();
                 var stu_id = $("input[name='stu_id']").val();
                 var name = $("input[name='name']").val();
                 var height = $("input[name='height']").val();
@@ -155,6 +157,7 @@
 
 
                 var examination = new Object();
+                examination["id"] = id;
                 examination["stu_id"] = stu_id;
                 examination["name"] = name;
                 examination["height"] = height;
@@ -171,7 +174,7 @@
                 examination["eyeDiseases"] = eyeDiseases;
 
                 $.ajax({
-                    url: "/examination/add/deal",
+                    url: "/examination/update/deal",
                     data: JSON.stringify(examination),
                     type: "post",
                     contentType: "application/json;charset=UTF-8",

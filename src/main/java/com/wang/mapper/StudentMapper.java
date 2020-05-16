@@ -23,4 +23,12 @@ public interface StudentMapper {
 
     @Delete("delete from student where stu_id = #{stu_id}")
     int deleteStudent(String stu_id);
+
+    @Update("update student set " +
+            "name = #{name} ," +
+            "gender = #{gender} ," +
+            "dept_name = #{dept_name} ," +
+            "grade = #{grade} " +
+            "where stu_id = #{stu_id}")
+    int updateStudent(Student student);
 }

@@ -5,10 +5,7 @@ import com.wang.service.student.StudentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -63,5 +60,28 @@ public class StudentController {
         List<Student> students = studentService.queryStudentList();
         model.addAttribute("students",students);
         return "student/student-list";
+    }
+
+    @GetMapping (value = "/student/update/{studentId}")
+    public String  updateStudent(@PathVariable("studentId") String studentId, Model model){
+        Student student = studentService.queryStudentByStuId(studentId);
+        model.addAttribute("student", student);
+
+        return "student/student_update";
+    }
+
+
+    @PostMapping(value = "/student/update/deal")
+    @ResponseBody
+    public HashMap  doUpdateStudent(@RequestBody Student student) {
+        HashMap<String, String> map = new HashMap<String, String>();
+
+        int total = studentService.updateStudent(student);
+        if (total == 1) {
+            map.put("msg", "更新成功");
+        } else {
+            map.put("msg", "更新失败");
+        }
+        return map;
     }
 }

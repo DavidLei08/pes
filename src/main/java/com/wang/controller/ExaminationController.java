@@ -2,15 +2,16 @@ package com.wang.controller;
 
 import com.wang.pojo.Examination;
 import com.wang.pojo.StuExam;
+import com.wang.pojo.User;
 import com.wang.service.examination.ExaminationService;
 import com.wang.service.student.StudentService;
+import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.session.Session;
+import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
 import java.util.HashMap;
@@ -90,4 +91,32 @@ public class ExaminationController {
         return map;
     }
 
+
+    @RequestMapping("/examination/delete/{id}")
+    @ResponseBody
+    public HashMap delExamination(@PathVariable("id") Integer id){
+        HashMap<String, String> map = new HashMap<>();
+
+        int i = examinationService.deleteExaminationById(id);
+        if (i==1){
+            map.put("msg","删除成功");
+        }else{
+            map.put("msg","删除失败");
+        }
+        return map;
+    }
+
+    @GetMapping("/examination/personInfo")
+    public String  examinationPersonInfo(Model model){
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        String userName = (String)session.getAttribute("username");
+
+        Examination examination = examinationService.queryExaminationByStu(userName);
+        if(examination == null) {
+            examination = new Examination();
+        }
+        model.addAttribute("examination",examination);
+        return "/examination/personInfo";
+    }
 }

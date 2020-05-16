@@ -57,4 +57,17 @@ public class ExaminationServiceImpl implements ExaminationService {
     public int updateExamination(Examination examination) {
         return examinationMapper.updateExamination(examination);
     }
+
+    @Override
+    public Examination queryExaminationByStu(String stu_id) {
+        Examination  examination = examinationMapper.queryExaminationByStu(stu_id);
+
+        return examination;
+    }
+
+    @Override
+    public int deleteExaminationById(Integer id){
+        return examinationMapper.deleteExaminationById(id);
+    }
+
 }

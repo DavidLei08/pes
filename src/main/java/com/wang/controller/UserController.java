@@ -1,5 +1,6 @@
 package com.wang.controller;
 
+import com.wang.controller.ben.UpdatePasswordBean;
 import com.wang.pojo.Student;
 import com.wang.pojo.User;
 import com.wang.service.user.UserService;
@@ -9,14 +10,15 @@ import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.session.Session;
 import org.apache.shiro.subject.Subject;
+import org.apache.shiro.web.session.HttpServletSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
+import javax.jws.WebParam;
+import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.List;
 
@@ -95,4 +97,51 @@ public class UserController {
         }
         return map;
     }
+
+    @RequestMapping("/user/profile")
+    public String profileUser(Model model){
+        //获取当前的用户
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        String userName = (String)session.getAttribute("username");
+        User user = userService.queryUserByUsername(userName);
+        model.addAttribute("user",user);
+        return "user/profile";
+    }
+
+    @GetMapping(value = "/update/pwd/")
+   public  String updatePassword(Model model){
+        //获取当前的用户
+        Subject subject = SecurityUtils.getSubject();
+        Session session = subject.getSession();
+        String userName = (String)session.getAttribute("username");
+        User user = userService.queryUserByUsername(userName);
+        model.addAttribute("user",user);
+        return  "user/updatePassword";
+   }
+
+   @ResponseBody
+   @PostMapping(value = "/update/pwd")
+    public HashMap doUpdatePassword(@Valid @RequestBody UpdatePasswordBean bean, BindingResult result){
+       //获取当前的用户
+       HashMap map = new HashMap();
+       Subject subject = SecurityUtils.getSubject();
+       Session session = subject.getSession();
+       String userName = (String)session.getAttribute("username");
+       User user = userService.queryUserByUsername(userName);
+        if(!result.hasErrors()){
+           int total =  userService.updateUserPassword(bean);
+           if(total == 1){
+               map.put("msg", "密码修改成功！！");
+
+           } else {
+               map.put("msg", "密码修改失败！！");
+
+           }
+        } else {
+            map.put("msg", "密码修改格式不正确！！");
+        }
+        return map;
+
+   }
 }

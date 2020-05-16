@@ -1,5 +1,6 @@
 package com.wang.service.user;
 
+import com.wang.controller.ben.UpdatePasswordBean;
 import com.wang.pojo.User;
 import org.apache.ibatis.annotations.Param;
 
@@ -19,4 +20,6 @@ public interface UserService {
     User queryUserById(Integer id);
 
     int deleteUserById(Integer id);
+
+    int updateUserPassword(UpdatePasswordBean bean);
 }

@@ -18,5 +18,9 @@ public interface ExaminationService {
 
     int deleteExamination(String stu_id);
 
+    int deleteExaminationById(Integer id);
+
     int updateExamination(Examination examination);
+
+    Examination queryExaminationByStu(String stu_id);
 }

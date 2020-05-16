@@ -1,5 +1,6 @@
 package com.wang.service.user;
 
+import com.wang.controller.ben.UpdatePasswordBean;
 import com.wang.mapper.ExaminationMapper;
 import com.wang.mapper.StudentMapper;
 import com.wang.mapper.UserMapper;
@@ -83,4 +84,15 @@ public class UserServiceImpl implements UserService {
         }
 
     }
+
+    @Override
+    public int updateUserPassword(UpdatePasswordBean bean) {
+        int total = 0;
+        if(bean.getConfirmPassword().equals(bean.getNewPassword())) {
+            total = userMapper.updatePassword(bean);
+        }
+        return total;
+    }
+
+
 }

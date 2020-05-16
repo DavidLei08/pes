@@ -1,5 +1,6 @@
 package com.wang.mapper;
 
+import com.wang.controller.ben.UpdatePasswordBean;
 import com.wang.pojo.User;
 import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
@@ -29,4 +30,8 @@ public interface UserMapper {
 
     @Update("update user set username=#{user.username},password=#{user.password},perms =#{user.perms} where id = #{user.id}")
     int updateUser(@Param("user") User user);
+
+
+    @Update("update user set password= #{bean.newPassword} where id = #{bean.id} and password = #{bean.oldPassword}")
+    int updatePassword(@Param("bean") UpdatePasswordBean bean);
 }

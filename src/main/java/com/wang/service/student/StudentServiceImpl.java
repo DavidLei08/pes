@@ -60,4 +60,10 @@ public class StudentServiceImpl implements StudentService {
         return i==i1 ? 1: 0;
     }
 
+    @Override
+    public int updateStudent(Student student) {
+        int toatl = studentMapper.updateStudent(student);
+        return toatl;
+    }
+
 }

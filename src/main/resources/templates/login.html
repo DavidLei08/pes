@@ -21,55 +21,63 @@
             width: 100%;
         }
 
-        #github-iframe {
-            position: fixed;
-            left: 32px;
-            top: 32px;
-        }
-        #main{
+
+        #main {
             width: 300px;
             height: 300px;
             border-radius: 5px;
-            position:absolute;
-            top:50%;
-            left:50%;
-            transform-origin:25% 25%;
+            position: absolute;
+            top: 40%;
+            left: 50%;
+            transform-origin: 25% 25%;
             transform: rotate(180deg);
         }
 
-        #main .content{
+        #main .content {
             width: 100%;
             height: 100%;
             transform: rotate(180deg);
         }
     </style>
 </head>
-<body>
-<div id="github-iframe"></div>
-<div id="main">
+<body >
+
+
+<div id="main" >
+
     <div class="content">
-        <form class="layui-form" th:action="@{/login}" id="myform">
+        <h2 style="color: currentColor;padding-bottom: 1.5em;">
+            <img th:src="@{/images/ahtcm.png}" style="width:2.5em;">&nbsp;<span>学生健康档案管理系统</span>
+        </h2>
+        <div>
+            <form class="layui-form" th:action="@{/login}" id="myform">
 
-            <div class="layui-form-item">
-                <input type="text" name="username" id="username" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？" placeholder="请输入用户名" autocomplete="off" class="layui-input">
-            </div>
+                <div class="layui-form-item">
+                    <input type="text" name="username" id="username" lay-verify="required" lay-reqtext="用户名是必填项，岂能为空？"
+                           placeholder="请输入用户名"  class="layui-input">
+                </div>
 
-            <div class="layui-form-item">
-                <input type="password" name="password" id="password" lay-verify="title" autocomplete="off" placeholder="请输入密码" class="layui-input">
-            </div>
+                <div class="layui-form-item">
+                    <input type="password" name="password" id="password" lay-verify="title"
+                           placeholder="请输入密码" class="layui-input">
+                </div>
 
-            <div class="layui-form-item">
-                <div id="slider"></div>
-            </div>
+                <div class="layui-form-item">
+                    <div id="slider"></div>
+                </div>
 
-            <div class="layui-form-item">
-                <button type="submit" class="layui-btn" style="width: 100%;" lay-submit lay-filter="login" >登录</button>
-            </div>
-        </form>
+                <div class="layui-form-item">
+                    <button type="submit" class="layui-btn" style="width: 100%;" lay-submit lay-filter="login">登录
+                    </button>
+                </div>
+                <input type="hidden" id="error_msg" th:value="${msg}"/>
+            </form>
+        </div>
     </div>
 </div>
 </div>
-<script type="text/javascript" color="0,0,0" pointColor="0,0,0" opacity='0.7' zIndex="-2" count="99" th:src="@{/js/canvas-nest.js}"></script>
+<script type="text/javascript" color="0,0,0" pointColor="0,0,0" opacity='0.7' zIndex="-2" count="99"
+        th:src="@{/js/canvas-nest.js}"></script>
 <script type="text/javascript">
 
     // 下面为其他 js，无需关注
@@ -82,12 +90,17 @@
         i.setAttribute("frameborder", "0", 0);
         i.width = "100px";
         i.height = "20px";
-        document.getElementById("github-iframe").appendChild(i);
+        // document.getElementById("github-iframe").appendChild(i);
     }
+
     function loadGitHubBtn() {
-        if (window.addEventListener) {window.addEventListener("load", asyncLoad, false);}
-        else if (window.attachEvent) {window.attachEvent("onload", asyncLoad);}
-        else {window.onload = asyncLoad;}
+        if (window.addEventListener) {
+            window.addEventListener("load", asyncLoad, false);
+        } else if (window.attachEvent) {
+            window.attachEvent("onload", asyncLoad);
+        } else {
+            window.onload = asyncLoad;
+        }
     }
 
     loadGitHubBtn();
@@ -97,22 +110,28 @@
     //一般直接写在一个js文件中
     layui.config({
         base: 'js/'
-    }).use(['sliderVerify', 'jquery', 'form'], function() {
+    }).use(['sliderVerify', 'jquery', 'form'], function () {
         var sliderVerify = layui.sliderVerify,
             form = layui.form;
         var slider = sliderVerify.render({
             elem: '#slider'
         })
         //监听提交
-        form.on('submit(login)', function(data) {
-            if(slider.isOk()){//用于表单验证是否已经滑动成功
+        form.on('submit(login)', function (data) {
+            if (slider.isOk()) {//用于表单验证是否已经滑动成功
                 layer.msg("登陆中");
-            }else{
+            } else {
                 layer.msg("请先通过滑块验证");
             }
         });
-
+        $(document).ready(function () {
+            if($("#error_msg").attr("value")==''
+                && $("#error_msg").attr("value")!==undefined
+                && $("#error_msg").attr("value")!==null)
+                layer.msg($("#error_msg").val());
+        })
     })
+
 </script>
 </body>
 </html>

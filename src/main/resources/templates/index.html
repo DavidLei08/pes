@@ -36,10 +36,10 @@
             <dl class="layui-nav-child">
                 <!-- 二级菜单 -->
                 <dd>
-                    <a onclick="xadmin.open('个人信息','/student/profile')">个人信息</a>
+                    <a onclick="xadmin.open('个人信息','/user/profile',450,300)">个人信息</a>
                 </dd>
                 <dd>
-                    <a onclick="xadmin.open('修改密码','/update/pwd/')">修改密码</a>
+                    <a onclick="xadmin.open('修改密码','/update/pwd/',450,400)">修改密码</a>
                 </dd>
                 <dd>
                     <a th:href="@{/logout}">退出</a>
@@ -56,7 +56,7 @@
         <ul id="nav">
 
             <!--体检信息管理-->
-            <li>
+            <li shiro:hasPermission="admin">
                 <a href="javascript:">
                     <i class="iconfont left-nav-li" lay-tips="体检信息管理">&#xe6b8;</i>
                     <cite>体检信息管理</cite>
@@ -67,7 +67,7 @@
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>学生体检列表</cite></a>
                     </li>
-                    <li >
+                    <li shiro:hasPermission="admin">
                         <a onclick="xadmin.add_tab('体检信息录入','/examination/add')">
                             <i class="iconfont">&#xe6a7;</i>
                             <cite>体检信息录入</cite></a>
@@ -120,7 +120,22 @@
                     </li>
                 </ul>
             </li>
+
+            <li shiro:hasPermission="student">
+                <a href="javascript:">
+                    <i class="iconfont left-nav-li" lay-tips="个人体检信息">&#xe723;</i>
+                    <cite>个人体检信息</cite>
+                    <i class="iconfont nav_right">&#xe697;</i></a>
+                <ul class="sub-menu">
+                    <li>
+                        <a onclick="xadmin.add_tab('个人体检信息','/examination/personInfo')">
+                            <i class="iconfont">&#xe6a7;</i>
+                            <cite>个人体检信息</cite></a>
+                    </li>
+                </ul>
+            </li>
         </ul>
+
     </div>
 </div>
 <!-- <div class="x-slide_left"></div> -->
